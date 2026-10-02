@@ -1,11 +1,11 @@
 from typing import List
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 
-class BaseRecipe(BaseModel):
+class RecipeCreate(BaseModel):
     """
-    Общие поля рецепта, которые используются и для входа, и для ответа.
+    Схема для создания рецепта.
     """
     name: str
     time_in_minutes: int
@@ -13,33 +13,22 @@ class BaseRecipe(BaseModel):
     documentation: str
 
 
-class RecipeCreate(BaseRecipe):
-    """
-    Схема для создания рецепта.
-    """
-    pass
-
-
 class RecipeListOut(BaseModel):
     """
     Схема для списка рецептов.
-    Отдает только поля, которые нужны на первом экране.
     """
-
     id: int
     name: str
     count_of_watches: int
     time_in_minutes: int
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class RecipeDetailOut(BaseModel):
     """
     Схема для детальной карточки рецепта.
     """
-
     id: int
     name: str
     time_in_minutes: int
@@ -47,5 +36,4 @@ class RecipeDetailOut(BaseModel):
     documentation: str
     count_of_watches: int
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
